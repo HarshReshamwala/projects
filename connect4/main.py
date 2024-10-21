@@ -85,5 +85,5 @@ if __name__ == "__main__":
     ## Play against MCTS
     print("Play game --------------")
     timeout = 600
-    itermax = 10000
+    itermax = 100
     winner = start_game(Board, ["MCTS", "Human"], itermax=itermax, timeout=timeout)

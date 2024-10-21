@@ -135,18 +135,19 @@ class GameState:
             actions.append('allin')
         return actions
 
-    def take_action(self, action):
-        new_state = self.copy()
-
-        print(f"Action taken: {action}")
-        print(f"Before removal: Player turn {new_state.player_turn}, Active players: {new_state.active_players}")
-
-        if new_state.player_turn in new_state.active_players:
-            new_state.active_players.remove(new_state.player_turn)
-        else:
-            print(f"Error: Player {new_state.player_turn} not in active players list.")
+    def take_action(self, action, amount=None):
+        """
+        Apply an action and return the new game state.
+        :param action: Action to be taken (fold, call, raise, bet, allin)
+        :param amount: Amount to bet or raise if applicable
+        """
+        new_state = self._clone_state()
         
-        if action == 'call':
+        if action == 'fold':
+            # Remove the current player from active players
+            new_state.active_players.remove(new_state.player_turn)
+        
+        elif action == 'call':
             call_amount = new_state.current_bet
             new_state.stacks[new_state.player_turn] -= call_amount
             new_state.pot_size += call_amount
